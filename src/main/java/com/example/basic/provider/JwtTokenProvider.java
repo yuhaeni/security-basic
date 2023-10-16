@@ -1,5 +1,6 @@
 package com.example.basic.provider;
 
+import com.example.basic.users.dto.UserSignUpDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
@@ -9,9 +10,11 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
@@ -87,8 +90,9 @@ public class JwtTokenProvider implements InitializingBean {
                                                             .map(SimpleGrantedAuthority::new) //
                                                             .collect(Collectors.toList());
 
-        // TODO
-        return null;
+        User principal = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal ,token ,authorities);
 
     }
 
