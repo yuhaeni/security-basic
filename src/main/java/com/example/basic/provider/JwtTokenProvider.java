@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider implements InitializingBean {
 
-    private static final String AUTHORITIES_KEY = "auth";
+    private static final String AUTHORITIES_KEY = "auth"; // JWT 토큰의 클레임 내부에서 사용자의 권한
     private final String secretKey;
     private final long tokenValidityInMilliseconds;
     private Key key;
