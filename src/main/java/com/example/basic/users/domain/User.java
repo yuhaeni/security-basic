@@ -1,6 +1,5 @@
 package com.example.basic.users.domain;
 
-import com.example.basic.users.dto.UserSignUpDto;
 import com.example.basic.users.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor
 @Getter
-public class UserSignUpDto {
+public class RequestUserDto {
 
     private String email;
     private String password;
