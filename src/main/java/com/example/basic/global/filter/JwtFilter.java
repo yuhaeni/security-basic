@@ -1,4 +1,4 @@
-package com.example.basic.filter;
+package com.example.basic.global.filter;
 
 import com.example.basic.provider.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class JwtFilter extends OncePerRequestFilter {
 
+    public static final String AUTHORIZATION_HEADER = "Authorization"; // HTTP 요청 헤더에서 JWT 토큰을 가져오는 데 사용되는 헤더의 이름
     private final JwtTokenProvider jwtTokenProvider;
 
     public JwtFilter(JwtTokenProvider jwtTokenProvider) {
