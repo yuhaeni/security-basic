@@ -1,12 +1,10 @@
 package com.example.basic.provider;
 
 import com.example.basic.users.dto.UserSignUpDto;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,5 +93,31 @@ public class JwtTokenProvider implements InitializingBean {
         return new UsernamePasswordAuthenticationToken(principal ,token ,authorities);
 
     }
+
+    /**
+     * 필터에서 사용할 토큰 검증
+     * @param token 필터 정보
+     * @return 토큰이 유효 여부
+     */
+
+    public boolean validateToken(String token) {
+
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parse(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+           // 잘못된 JWT 서명
+        } catch (ExpiredJwtException e) {
+           // 만료된 JWT 토큰
+        } catch (UnsupportedJwtException e) {
+           // 지원되지 않는 JWT 토큰
+        } catch (IllegalArgumentException e) {
+            // 잘못된 JWT 토큰
+        }
+        return false;
+
+
+    }
+
 
 }
