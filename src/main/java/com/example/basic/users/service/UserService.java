@@ -39,7 +39,7 @@ public class UserService {
 
     }
 
-    /*
+
 
     public TokenInfoDto login(RequestUserDto dto) {
 
@@ -50,17 +50,12 @@ public class UserService {
 
         // 2. SecurityContextHolder에 위에서 생성한 Authentication 객체를 저장한다.
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        // 3. JwtTokenProvider를 통해 JWT 토큰을 생성한다.
-        String jwtToken = jwtTokenProvider.createToken(authentication);
 
-        // 4. 생성한 JWT 토큰을 Response Header에 담아서 리턴한다.
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + jwtToken);
-
-        return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(new ResponseTokenDto(jwtToken));
+        // 3. JwtTokenProvider를 통해 JWT 토큰을 생성 후 리턴
+        return jwtTokenProvider.generateToken(authentication);
 
     }
-     */
+
 
 
 

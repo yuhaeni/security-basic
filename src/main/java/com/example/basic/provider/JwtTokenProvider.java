@@ -1,5 +1,6 @@
 package com.example.basic.provider;
 
+import com.example.basic.global.dto.TokenInfoDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -46,22 +47,33 @@ public class JwtTokenProvider implements InitializingBean {
      * @return - 토큰
      */
 
-    public String createToken(Authentication authentication) {
+    public TokenInfoDto generateToken(Authentication authentication) {
 
         // 권한 값을 받아 하나의 문자열로 합침
         String authorities = authentication.getAuthorities().stream()
                             .map(GrantedAuthority::getAuthority)
                             .collect(Collectors.joining(","));
 
-        long now = new Date().getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
-
-        return Jwts.builder()
-                .setSubject(authentication.getName())   // 토큰의 용도를 명시. 인증(Authentication) 객체에서 사용자 이름을 가져와서 주제로 설정.
-                .claim(AUTHORITIES_KEY, authorities) // JWT의 페이로드 섹션에 사용자의 권한 정보를 설정
-                .signWith(key ,SignatureAlgorithm.HS512)  // JWT 서명하기 위해 사용되는 알고리즘 및 비밀 키 설정
-                .setExpiration(validity)    // 토큰 만료 시간 설정
+        long now = (new Date()).getTime();
+        // Access Token 생성
+        Date accessTokenExpiresIn = new Date(now + 86400000);
+        String accessToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim("auth", authorities)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+        // Refresh Token 생성
+        String refreshToken = Jwts.builder()
+                .setExpiration(new Date(now + 86400000)) // 토큰 만료 시간 설정
+                .signWith(key, SignatureAlgorithm.HS256) // JWT 서명하기 위해 사용되는 알고리즘 및 비밀 키 설정
                 .compact(); // 토큰 생성 (JWT를 문자열로 직렬화)
+
+        return TokenInfoDto.builder()
+                .grantType("Bearer")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
 
     }
 
