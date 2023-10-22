@@ -1,5 +1,6 @@
 package com.example.basic.users.controller;
 
+import com.example.basic.global.dto.TokenInfoDto;
 import com.example.basic.users.dto.RequestUserDto;
 import com.example.basic.users.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,11 @@ public class UserController {
     public String singUp (@RequestBody RequestUserDto dto) throws Exception {
         userService.signUp(dto);
         return "회원가입 성공";
+    }
+
+    @PostMapping("/login")
+    public TokenInfoDto login(@RequestBody RequestUserDto requestUserDto){
+        return userService.login(requestUserDto);
     }
 
 }
