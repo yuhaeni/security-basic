@@ -21,7 +21,6 @@ public class RequestUserDto {
     private int age;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
     public User toEntity() {
