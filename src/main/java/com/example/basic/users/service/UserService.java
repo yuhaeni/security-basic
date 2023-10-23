@@ -1,15 +1,10 @@
 package com.example.basic.users.service;
 
 import com.example.basic.global.dto.TokenInfoDto;
-import com.example.basic.global.filter.JwtAuthenticationFilter;
 import com.example.basic.provider.JwtTokenProvider;
-import com.example.basic.users.domain.User;
 import com.example.basic.users.domain.UserRepository;
 import com.example.basic.users.dto.RequestUserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -26,19 +21,14 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManager;
 
-
-
-    public User signUp (RequestUserDto dto) throws Exception {
+    public void signUp (RequestUserDto dto) throws Exception {
         if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
-
         // 비밀번호 암호화
         dto.encryptPassword(passwordEncoder, dto.getPassword());
-        return userRepository.save(dto.toEntity());
-
+        userRepository.save(dto.toEntity());
     }
-
 
 
     public TokenInfoDto login(RequestUserDto dto) {
