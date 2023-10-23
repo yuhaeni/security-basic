@@ -1,7 +1,6 @@
 package com.example.basic.users.dto;
 
 import com.example.basic.users.domain.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class RequestUserDto {
+public class SignRequestUserDto {
 
     private String email;
     private String password;
