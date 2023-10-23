@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 // 해당 API에 대해서는 모든 요청을 허가한다
-                .antMatchers("/sign-up").permitAll()
+                .antMatchers("/sign-up","/login").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행한다.
                 .and()
