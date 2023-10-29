@@ -5,13 +5,15 @@ jwt:
 
 
 # Spring DataSource
-# Hibernate
+
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/security?useSSL=false&useUnicode=true&characterEncoding=utf8
     username: root
     password: doota100@
+
+# JPA
   jpa:
     show-sql: true
     hibernate:
