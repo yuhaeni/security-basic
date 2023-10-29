@@ -128,17 +128,4 @@ public class JwtTokenProvider implements InitializingBean {
 
     }
 
-    /**
-     * 사용자가 보낸 요청 헤더의 'Authorization' 필드에서 토큰을 추출하는 메소드.
-     * @param request
-     * @return token(String)
-     */
-
-    public String resolveToken (HttpServletRequest request) {
-        return request.getHeader("Authorization");
-    }
-
-
-
-
 }
