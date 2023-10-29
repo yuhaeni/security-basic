@@ -1,5 +1,6 @@
 package com.example.basic.users.dto;
 
+import com.example.basic.users.domain.Authority;
 import com.example.basic.users.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class RequestUserDto {
     private String password;
     private String name;
     private int age;
+    private Authority authority;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -30,7 +32,7 @@ public class RequestUserDto {
                 .password(password)
                 .name(name)
                 .age(age)
-                .roles(roles)
+                .authority(authority)
                 .build();
     }
 

@@ -1,6 +1,5 @@
 package com.example.basic.users.domain;
 
-import com.example.basic.users.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,16 +43,15 @@ public class User  implements UserDetails{
     @Column(columnDefinition = "char(1) default('M')")
     private String gender;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
-
+    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(authority.name()));
+        return authorities;
     }
 
     @Override
