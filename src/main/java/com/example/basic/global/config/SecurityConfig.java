@@ -44,6 +44,8 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행한다.
                 .and()
+                // Spring Security에 내장된 UsernamePasswordAuthenticationFilter 필터 앞에 JwtAuthenticationFilter를 추가하겠다.
+                // HTTP 요청이 도착할 때 JwtAuthenticationFilter가 먼저 실행되고, 그 후 UsernamePasswordAuthenticationFilter가 실행된다.
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class)
                 ;
         return httpSecurity.build();
