@@ -1,6 +1,8 @@
 package com.example.basic.users.service;
 
+import com.example.basic.global.dto.ErrorCode;
 import com.example.basic.global.dto.TokenInfoDto;
+import com.example.basic.global.exception.CustomException;
 import com.example.basic.jwt.JwtTokenProvider;
 import com.example.basic.users.domain.UserRepository;
 import com.example.basic.users.dto.LoginRequestUserDto;
@@ -24,7 +26,7 @@ public class UserService {
 
     public void signUp (SignRequestUserDto dto) throws Exception {
         if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new Exception("이미 존재하는 이메일입니다.");
+            throw new CustomException(ErrorCode.DUPLICATED_USER_EMAIL);
         }
         // 비밀번호 암호화
         dto.encryptPassword(passwordEncoder, dto.getPassword());
