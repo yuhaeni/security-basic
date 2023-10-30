@@ -1,10 +1,9 @@
 package com.example.basic.global.config;
 
-import com.example.basic.global.filter.JwtAuthenticationFilter;
-import com.example.basic.provider.JwtTokenProvider;
+import com.example.basic.jwt.JwtAuthenticationFilter;
+import com.example.basic.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;

@@ -1,6 +1,6 @@
-package com.example.basic.global.filter;
+package com.example.basic.jwt;
 
-import com.example.basic.provider.JwtTokenProvider;
+import com.example.basic.jwt.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;

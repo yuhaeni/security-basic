@@ -1,4 +1,4 @@
-package com.example.basic.provider;
+package com.example.basic.jwt;
 
 import com.example.basic.global.dto.TokenInfoDto;
 import io.jsonwebtoken.*;

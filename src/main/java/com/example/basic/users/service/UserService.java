@@ -1,7 +1,7 @@
 package com.example.basic.users.service;
 
 import com.example.basic.global.dto.TokenInfoDto;
-import com.example.basic.provider.JwtTokenProvider;
+import com.example.basic.jwt.JwtTokenProvider;
 import com.example.basic.users.domain.UserRepository;
 import com.example.basic.users.dto.LoginRequestUserDto;
 import com.example.basic.users.dto.SignRequestUserDto;
