@@ -23,7 +23,7 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManager;
 
     public void signUp (SignRequestUserDto dto) throws Exception {
-        if(userRepository.findOneWithAuthoritiesByUsername(dto.getEmail()).isPresent()) {
+        if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
         // 비밀번호 암호화

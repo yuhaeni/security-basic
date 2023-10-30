@@ -31,8 +31,6 @@ public class SignRequestUserDto {
     private int age;
     private Authority authority;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
 
     public User toEntity() {
         return User.builder()

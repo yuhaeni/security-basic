@@ -16,10 +16,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 로그인 시, DB에서 유저 정보와 권한 정보를 가져온다.
-        // 해당 정보를 기반으로 userdetails.User 객체를 생성해서 리턴한다.
-        return userRepository.findOneWithAuthoritiesByUsername(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
                 .map(this::createUserDetails)
                 .orElseThrow(()-> new UsernameNotFoundException("해당 유저를 찾을 수 없습니다."));
     }
