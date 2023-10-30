@@ -23,7 +23,7 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManager;
 
     public void signUp (SignRequestUserDto dto) throws Exception {
-        if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
+        if(userRepository.findOneWithAuthoritiesByUsername(dto.getEmail()).isPresent()) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
         // 비밀번호 암호화
@@ -36,7 +36,7 @@ public class UserService {
 
         // 1. AuthenticationManager를 통해 인증을 시도하고 인증이 성공하면 Authentication 객체를 리턴받는다.
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
-        // UserDetailsServiceImpl의 loadUserByUsername() 메소드가 실행
+        // 1-1. authenticationToken을 이용해서  Authentication 객체를 생성하려고 authenticate() 메소드가 실행될 때,  UserDetailsServiceImpl의 loadUserByUsername() 메소드가 실행
         Authentication authentication = authenticationManager.getObject().authenticate(authenticationToken);
 
         // 2. SecurityContextHolder에 위에서 생성한 Authentication 객체를 저장한다.

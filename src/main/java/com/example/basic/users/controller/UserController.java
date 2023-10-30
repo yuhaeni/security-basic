@@ -6,6 +6,8 @@ import com.example.basic.users.dto.SignRequestUserDto;
 import com.example.basic.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @PostMapping(value = "/sign-up")
     public ResponseEntity<String> singUp (@RequestBody @Valid SignRequestUserDto dto , Errors errors) throws Exception {
