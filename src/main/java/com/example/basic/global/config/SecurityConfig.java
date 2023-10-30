@@ -1,9 +1,12 @@
 package com.example.basic.global.config;
 
+import com.example.basic.jwt.JwtAccessDeniedHandler;
+import com.example.basic.jwt.JwtAuthenticationEntryPoint;
 import com.example.basic.jwt.JwtAuthenticationFilter;
 import com.example.basic.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,10 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true) // @PreAuthorize 어노테이션을 메도스 단위로 추가하기 위해 적용
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     // JWT를 사용하기 위해서는 기본적으로 password encoder가 필요
     // BCryptPasswordEncoder 사용
@@ -32,8 +38,18 @@ public class SecurityConfig {
                 // basic auth 및 csrf 보안을 사용하지 않는다
                 .httpBasic().disable()
                 .csrf().disable()
+
+                // Exception 핸들링 할 때, jwt 관련 클래스 추가
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+
                 // JWT를 사용하기 때문에 세션을 사용하지 않는다
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+
                 .and()
                 // 요청들에 대한 접근제한을 설정한다
                 .authorizeHttpRequests()
@@ -42,11 +58,16 @@ public class SecurityConfig {
                 // 나머지 요청에 대해서는 모두 인증되어야 한다
                 .anyRequest().authenticated()
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행한다.
+
                 .and()
                 // Spring Security에 내장된 UsernamePasswordAuthenticationFilter 필터 앞에 JwtAuthenticationFilter를 추가하겠다.
                 // HTTP 요청이 도착할 때 JwtAuthenticationFilter가 먼저 실행되고, 그 후 UsernamePasswordAuthenticationFilter가 실행된다.
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class)
-                ;
+
+
+        ;
+
+
         return httpSecurity.build();
     }
 
