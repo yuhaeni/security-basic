@@ -1,5 +1,6 @@
 package com.example.basic.users.dto;
 
+import com.example.basic.users.domain.Authority;
 import com.example.basic.users.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class SignRequestUserDto {
 
     @Positive
     private int age;
+    private Authority authority;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
@@ -38,7 +40,7 @@ public class SignRequestUserDto {
                 .password(password)
                 .name(name)
                 .age(age)
-                .roles(roles)
+                .authority(authority)
                 .build();
     }
 

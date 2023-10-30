@@ -47,16 +47,18 @@ public class JwtTokenProvider implements InitializingBean {
      * @return - 토큰
      */
 
-    public TokenInfoDto generateToken(Authentication authentication) {
+    public TokenInfoDto createToken(Authentication authentication) {
 
         // 권한 값을 받아 하나의 문자열로 합침
         String authorities = authentication.getAuthorities().stream()
                             .map(GrantedAuthority::getAuthority)
                             .collect(Collectors.joining(","));
 
+        // 토큰 만료 시간 설정
         long now = (new Date()).getTime();
+        Date accessTokenExpiresIn = new Date(now + this.tokenValidityInMilliseconds);
+
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)

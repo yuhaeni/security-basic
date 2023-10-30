@@ -43,7 +43,7 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 3. JwtTokenProvider를 통해 JWT 토큰을 생성 후 리턴
-        return jwtTokenProvider.generateToken(authentication);
+        return jwtTokenProvider.createToken(authentication);
 
     }
 
