@@ -4,6 +4,7 @@ import com.example.basic.global.dto.ErrorCode;
 import com.example.basic.global.dto.TokenInfoDto;
 import com.example.basic.global.exception.CustomException;
 import com.example.basic.jwt.JwtTokenProvider;
+import com.example.basic.users.domain.Authority;
 import com.example.basic.users.domain.UserRepository;
 import com.example.basic.users.dto.LoginRequestUserDto;
 import com.example.basic.users.dto.SignRequestUserDto;
@@ -28,8 +29,10 @@ public class UserService {
         if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATED_USER_EMAIL);
         }
-        // 비밀번호 암호화
-        dto.encryptPassword(passwordEncoder, dto.getPassword());
+
+        dto.setAuthority(Authority.ROLE_USER); // 권한 설정
+        dto.encryptPassword(passwordEncoder, dto.getPassword()); // 비밀번호 암호화
+
         userRepository.save(dto.toEntity());
     }
 

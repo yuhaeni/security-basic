@@ -2,6 +2,7 @@ package com.example.basic.users.dto;
 
 import com.example.basic.users.domain.Authority;
 import com.example.basic.users.domain.User;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
+@Data
 public class SignRequestUserDto {
 
     @Email(message = "이메일 형식에 맞지 않습니다.")
