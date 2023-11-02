@@ -32,7 +32,7 @@ public class UserService {
 
     @Transactional
     public void signUp (SignRequestUserDto dto) throws Exception {
-        if(userRepository.findOneWithAuthorities(dto.getEmail()).isPresent()) {
+        if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATED_USER_EMAIL);
         }
 
@@ -59,14 +59,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthorities(String username) {
-        // username을 기준으로 정보를 가져온다.
-        return userRepository.findOneWithAuthorities(username);
+    public Optional<User> getUserWithAuthorities(String email) {
+        // email을 기준으로 정보를 가져온다.
+        return userRepository.findByEmail(email);
     }
     @Transactional(readOnly = true)
     public Optional<User> getMyUserWithAuthorities() {
         // Security Context에 저장된 username의 정보만 가져온다.
-        return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthorities);
+        return SecurityUtil.getCurrentUsername().flatMap(userRepository::findByEmail);
     }
 
 }

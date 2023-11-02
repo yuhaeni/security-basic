@@ -2,19 +2,19 @@
 
 spring:
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/security?useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: doota100@
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/security
+    username: postgres
+    password: haeni1002
 
 # JPA
   jpa:
     show-sql: true
+    database: postgresql
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MariaDBDialect
+
 
 # JWT
 jwt:
