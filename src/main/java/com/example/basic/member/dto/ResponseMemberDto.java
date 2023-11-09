@@ -1,7 +1,7 @@
-package com.example.basic.users.dto;
+package com.example.basic.member.dto;
 
-import com.example.basic.users.domain.Authority;
-import com.example.basic.users.domain.Member;
+import com.example.basic.member.domain.Authority;
+import com.example.basic.member.domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

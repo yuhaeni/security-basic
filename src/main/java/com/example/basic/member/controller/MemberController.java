@@ -1,9 +1,9 @@
-package com.example.basic.users.controller;
+package com.example.basic.member.controller;
 
 import com.example.basic.global.dto.TokenInfoDto;
-import com.example.basic.users.dto.LoginRequestMemberDto;
-import com.example.basic.users.dto.SignRequestMemberDto;
-import com.example.basic.users.service.UserService;
+import com.example.basic.member.dto.LoginRequestMemberDto;
+import com.example.basic.member.dto.SignRequestMemberDto;
+import com.example.basic.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,9 +16,9 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Validated
-public class UserController {
+public class MemberController {
 
-    private final UserService userService;
+    private final MemberService userService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @PostMapping(value = "/sign-up")

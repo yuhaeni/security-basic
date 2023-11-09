@@ -1,7 +1,7 @@
-package com.example.basic.users.service;
+package com.example.basic.member.service;
 
-import com.example.basic.users.domain.Member;
-import com.example.basic.users.domain.UserRepository;
+import com.example.basic.member.domain.Member;
+import com.example.basic.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

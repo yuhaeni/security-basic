@@ -1,4 +1,4 @@
-package com.example.basic.users.domain;
+package com.example.basic.member.domain;
 
 public enum Authority {
     ROLE_USER, ROLE_ADMIN

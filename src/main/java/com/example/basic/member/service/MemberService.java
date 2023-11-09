@@ -1,15 +1,15 @@
-package com.example.basic.users.service;
+package com.example.basic.member.service;
 
 import com.example.basic.global.dto.ErrorCode;
 import com.example.basic.global.dto.TokenInfoDto;
 import com.example.basic.global.exception.CustomException;
 import com.example.basic.global.util.SecurityUtil;
 import com.example.basic.jwt.JwtTokenProvider;
-import com.example.basic.users.domain.Authority;
-import com.example.basic.users.domain.Member;
-import com.example.basic.users.domain.UserRepository;
-import com.example.basic.users.dto.LoginRequestMemberDto;
-import com.example.basic.users.dto.SignRequestMemberDto;
+import com.example.basic.member.domain.Authority;
+import com.example.basic.member.domain.Member;
+import com.example.basic.member.domain.MemberRepository;
+import com.example.basic.member.dto.LoginRequestMemberDto;
+import com.example.basic.member.dto.SignRequestMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,9 +23,9 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManager;
