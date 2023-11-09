@@ -6,10 +6,10 @@ import com.example.basic.global.exception.CustomException;
 import com.example.basic.global.util.SecurityUtil;
 import com.example.basic.jwt.JwtTokenProvider;
 import com.example.basic.users.domain.Authority;
-import com.example.basic.users.domain.User;
+import com.example.basic.users.domain.Member;
 import com.example.basic.users.domain.UserRepository;
-import com.example.basic.users.dto.LoginRequestUserDto;
-import com.example.basic.users.dto.SignRequestUserDto;
+import com.example.basic.users.dto.LoginRequestMemberDto;
+import com.example.basic.users.dto.SignRequestMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,7 +31,7 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManager;
 
     @Transactional
-    public void signUp (SignRequestUserDto dto) throws Exception {
+    public void signUp (SignRequestMemberDto dto) throws Exception {
         if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATED_USER_EMAIL);
         }
@@ -43,7 +43,7 @@ public class UserService {
     }
 
     @Transactional
-    public TokenInfoDto login(LoginRequestUserDto dto) {
+    public TokenInfoDto login(LoginRequestMemberDto dto) {
 
         // 1. AuthenticationManager를 통해 인증을 시도하고 인증이 성공하면 Authentication 객체를 리턴받는다.
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
@@ -59,12 +59,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthorities(String email) {
+    public Optional<Member> getUserWithAuthorities(String email) {
         // email을 기준으로 정보를 가져온다.
         return userRepository.findByEmail(email);
     }
     @Transactional(readOnly = true)
-    public Optional<User> getMyUserWithAuthorities() {
+    public Optional<Member> getMyUserWithAuthorities() {
         // Security Context에 저장된 username의 정보만 가져온다.
         return SecurityUtil.getCurrentUsername().flatMap(userRepository::findByEmail);
     }

@@ -1,21 +1,16 @@
 package com.example.basic.users.dto;
 
 import com.example.basic.users.domain.Authority;
-import com.example.basic.users.domain.User;
+import com.example.basic.users.domain.Member;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
 import javax.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class SignRequestUserDto {
+public class SignRequestMemberDto {
 
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -33,8 +28,8 @@ public class SignRequestUserDto {
     private Authority authority;
 
 
-    public User toEntity() {
-        return User.builder()
+    public Member toEntity() {
+        return Member.builder()
                 .email(email)
                 .password(password)
                 .name(name)

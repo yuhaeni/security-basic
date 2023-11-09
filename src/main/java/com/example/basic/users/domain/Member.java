@@ -13,18 +13,18 @@ import javax.validation.constraints.Digits;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Entity
-public class User  implements UserDetails{
+@Table
+public class Member implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column
     private Long id;
 
     @Column(unique = true)
@@ -43,7 +43,7 @@ public class User  implements UserDetails{
     @Column(columnDefinition = "char(1) default('M')")
     private String gender;
 
-    @Column(name = "user_role")
+    @Column
     @Enumerated(EnumType.STRING)
     private Authority authority;
 

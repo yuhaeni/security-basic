@@ -1,21 +1,15 @@
 package com.example.basic.users.dto;
 
-import com.example.basic.users.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class LoginRequestUserDto {
+public class LoginRequestMemberDto {
 
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotBlank(message = "이메일을 입력해주세요.")

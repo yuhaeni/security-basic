@@ -1,13 +1,13 @@
 package com.example.basic.users.dto;
 
 import com.example.basic.users.domain.Authority;
-import com.example.basic.users.domain.User;
+import com.example.basic.users.domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ResponseUserDto {
+public class ResponseMemberDto {
 
     private String email;
     private String password;
@@ -16,7 +16,7 @@ public class ResponseUserDto {
     private Authority authority;
 
     // entity -> dto
-    public ResponseUserDto(User entity) {
+    public ResponseMemberDto(Member entity) {
         this.email = entity.getEmail();
         this.password = entity.getPassword();
         this.name = entity.getName();

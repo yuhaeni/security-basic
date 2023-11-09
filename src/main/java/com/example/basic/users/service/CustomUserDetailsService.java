@@ -1,12 +1,11 @@
 package com.example.basic.users.service;
 
-import com.example.basic.users.domain.User;
+import com.example.basic.users.domain.Member;
 import com.example.basic.users.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,12 +22,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
-    private UserDetails createUserDetails(User user) {
-        return User.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .age(user.getAge())
-                .authority(user.getAuthority())
+    private UserDetails createUserDetails(Member member) {
+        return Member.builder()
+                .email(member.getEmail())
+                .password(member.getPassword())
+                .age(member.getAge())
+                .authority(member.getAuthority())
                 .build();
     }
 }
