@@ -38,32 +38,4 @@ public class UserController {
         return userService.login(loginRequestUserDto);
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public ResponseEntity<User> getMyUserInfo() {
-        Optional<User> user = userService.getMyUserWithAuthorities();
-
-        if(user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            throw new CustomException(ErrorCode.USERNAME_NOT_FOUND);
-        }
-
-    }
-    @GetMapping("/user/{username}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<User> getUserInfo(@PathVariable String username) {
-        Optional<User> user = userService.getUserWithAuthorities(username);
-
-        if(user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            throw new CustomException(ErrorCode.USERNAME_NOT_FOUND);
-        }
-    }
-
-
-
-
-
 }
