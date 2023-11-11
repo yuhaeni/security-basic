@@ -25,21 +25,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManager;
 
     @Transactional
     public void signUp (SignRequestMemberDto dto) throws Exception {
-        if(userRepository.findByEmail(dto.getEmail()).isPresent()) {
+        if(memberRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATED_USER_EMAIL);
         }
 
-        dto.setAuthority(Authority.ROLE_USER); // 권한 설정
-        dto.encryptPassword(passwordEncoder, dto.getPassword()); // 비밀번호 암호화
+        String password = passwordEncoder.encode(dto.getPassword()); // 비밀번호 암호화
+        Member member = dto.toEntity(password,Authority.ROLE_USER);
 
-        userRepository.save(dto.toEntity());
+        memberRepository.save(member);
     }
 
     @Transactional
@@ -61,12 +61,12 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Optional<Member> getUserWithAuthorities(String email) {
         // email을 기준으로 정보를 가져온다.
-        return userRepository.findByEmail(email);
+        return memberRepository.findByEmail(email);
     }
     @Transactional(readOnly = true)
     public Optional<Member> getMyUserWithAuthorities() {
         // Security Context에 저장된 username의 정보만 가져온다.
-        return SecurityUtil.getCurrentUsername().flatMap(userRepository::findByEmail);
+        return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findByEmail);
     }
 
 }

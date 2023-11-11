@@ -28,12 +28,12 @@ public class SignRequestMemberDto {
     private Authority authority;
 
 
-    public Member toEntity() {
+    public Member toEntity(String password, Authority authority) {
         return Member.builder()
-                .email(email)
+                .email(this.email)
                 .password(password)
-                .name(name)
-                .age(age)
+                .name(this.name)
+                .age(this.age)
                 .authority(authority)
                 .build();
     }
